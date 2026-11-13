@@ -1,2 +1,8 @@
 services:
-  
+  game-server:
+    build:
+      context: ./game-server
+      dockerfile: Dockerfile
+    container_name: shooter-game-server
+    ports:
+      - "8080:8080"
