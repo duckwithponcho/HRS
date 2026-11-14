@@ -1,0 +1,95 @@
+/* Save this as dungeon-wall.css */
+body {
+  background-color: #181818;
+  background-image: url('/images/dungeon-wall.png');
+  background-repeat: repeat;
+  background-size: 400px 400px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 7%;
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 2px solid #75603c;
+}
+
+.logo {
+    color: #d2ae70;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.login-button {
+    color: #e8dfc8;
+    text-decoration: none;
+    border: 1px solid #c49a53;
+    padding: 12px 28px;
+    letter-spacing: 2px;
+}
+
+.login-button:hover {
+    background: #c49a53;
+    color: #181818;
+}
+
+.hero {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.subtitle {
+    color: #d2ae70;
+    letter-spacing: 6px;
+}
+
+.hero h1 {
+    font-size: clamp(48px, 8vw, 95px);
+    color: #eee2c9;
+    text-shadow: 4px 4px 8px #000;
+    margin: 20px 0;
+}
+
+.description {
+    color: #d0c7b8;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.enter-button {
+    margin-top: 35px;
+    padding: 18px 45px;
+    background: #852626;
+    border: 2px solid #c49a53;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.enter-button:hover {
+    background: #c49a53;
+    color: #181818;
+    transform: translateY(-3px);
+}
+
+.footer-text {
+    margin-top: 60px;
+    color: #c49a53;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+

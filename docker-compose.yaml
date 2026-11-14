@@ -6,3 +6,8 @@ services:
     container_name: shooter-game-server
     ports:
       - "8080:8080"
+    volumes:
+      - ./frontend/pages:/app/pages:ro
+      - ./frontend/css:/app/css:ro
+      - ./frontend/js:/app/js:ro
+      - ./frontend/images:/app/images:ro
