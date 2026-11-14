@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Dungeon Arena</title>
+
+    <link rel="stylesheet" href="/css/dungeon-wall.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <a href="/" class="logo">DUNGEON ARENA</a>
+
+        <nav>
+            <a href="/">HOME</a>
+            <a href="/register">REGISTER</a>
+        </nav>
+    </header>
+
+    <!-- Login Section -->
+    <main class="login-page">
+
+        <section class="login-container">
+
+            <p class="subtitle">WELCOME BACK, WARRIOR</p>
+
+            <h1>ENTER THE DUNGEON</h1>
+
+            <p class="login-description">
+                Log in to return to the arena.
+            </p>
+
+            <form action="/login" method="POST">
+
+                <div class="form-group">
+                    <label for="username">USERNAME</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">PASSWORD</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="enter-button">
+                    LOGIN
+                </button>
+
+            </form>
+
+            <p class="register-link">
+                New to the dungeon?
+                <a href="/register">Create an account</a>
+            </p>
+
+            <a href="/" class="back-link">← BACK TO HOME</a>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

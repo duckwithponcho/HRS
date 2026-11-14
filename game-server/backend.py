@@ -19,7 +19,14 @@ async def home(request: Request):
         context = {}
     )
 
-@app.get("/health")
-async def health():
-    return {"status": "healthy"}
-
+@app.get("/login")
+async def login(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html",
+        context = {}
+    )
+    
+@app.get("/register")
+async def register(request: Request):
+    return templates.TemplateResponse(request=request, name="register.html", context = {})
