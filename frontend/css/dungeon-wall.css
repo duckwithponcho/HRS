@@ -278,4 +278,15 @@ body {
     margin: 0;
 }
 
+.navbar nav a,
+.navbar nav a:visited {
+    color: #d5a34f;
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.navbar nav a:hover {
+    color: #ffffff;
+}
+
 

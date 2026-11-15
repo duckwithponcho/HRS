@@ -42,19 +42,6 @@ async def register(request: Request):
     return templates.TemplateResponse(request=request, name="register.html", context={"username": get_current_username(request)})
 
 
-def hash_password(password):
-    passwrod_bytes = password.encode('utf-8')
-    salt = bcrypt.gensalt(print)
-    hashed_password = bcrypt.hashpw(password_bytes, salt)
-        
-    return hashed_password.decode('utf-8')
-
-#returns true if password matches and false otherwise
-def check_password(password: str, stored_hash: str):
-    password_bytes = password.encode('utf-8')
-    stored_hash_bytes = stored_hash.encode('utf-8')
-    return bcrypt.checkpw(password_bytes, stored_hash_bytes)
-
 def get_current_username(request: Request):
     token = request.cookies.get("auth_token")
     if not token:

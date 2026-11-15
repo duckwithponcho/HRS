@@ -45,12 +45,14 @@ async def register_post(request: Request):
     #validate username and password here
     
     #check if username is already taken
-    if get_user_by_username(username) is not None:
-        raise HTTPException(status_code=400, detail = "user already exists")
     if not verify_username(username):
         raise HTTPException(status_code=400, detail="Invalid username")
     if not verify_password(password):
         raise HTTPException(status_code=400, detail="Invalid password")
+    if get_user_by_username(username) is not None:
+        raise HTTPException(status_code=400, detail = "user already exists")
+    
+   
     username = html.escape(username)
     
     
@@ -71,11 +73,10 @@ async def login(request: Request):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
     stored_hash = user[2]
-    token = generate_jwt(user[1])
-    print(user[1])
+    
     if not check_password(password, stored_hash):
         raise HTTPException(status_code=401, detail="Invalid username or password")
-    
+    token = generate_jwt(user[1])
     response = RedirectResponse(url="/",status_code=303)
     
     response.set_cookie(key="auth_token",value = token, httponly=True,secure=False,samesite="lax",max_age=3600,path="/")
@@ -108,6 +109,14 @@ def verify_username(username: str):
 SPECIAL_CHARACTERS = "!@#$%^&()-_="
 def verify_password(password: str):
     if len(password) < 8:
+        return False
+    
+    has_lowercase = any(char.islower() for char in password)
+    has_uppercase = any(char.isupper() for char in password)
+    has_number = any(char.isdigit() for char in password )
+    has_special = any (char in SPECIAL_CHARACTERS for char in password)
+    
+    if not all([has_lowercase, has_uppercase, has_number, has_special]):
         return False
     for char in password:
         if not char.isalnum() and char not in SPECIAL_CHARACTERS:
