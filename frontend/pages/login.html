@@ -11,15 +11,21 @@
 
 <body>
 
-    <!-- Navigation -->
     <header class="navbar">
-        <a href="/" class="logo">DUNGEON ARENA</a>
+    <a href="/" class="logo">DUNGEON ARENA</a>
 
-        <nav>
-            <a href="/">HOME</a>
-            <a href="/register">REGISTER</a>
-        </nav>
-    </header>
+    <nav>
+       {% if username %}
+    <span class="nav-username">Welcome, {{ username }}!</span>
+
+    <form action="/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-link">LOGOUT</button>
+    </form>
+{% else %}
+    <a href="/login">LOGIN</a>
+{% endif %}
+    </nav>
+</header>
 
     <!-- Login Section -->
     <main class="login-page">

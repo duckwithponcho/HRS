@@ -33,6 +33,23 @@ body {
     padding: 12px 28px;
     letter-spacing: 2px;
 }
+.logout-form {
+    margin: 0;
+}
+
+.logout-link {
+    background: none;
+    border: none;
+    color: #d5a34f;
+    font-size: 16px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    font-family: inherit;
+}
+
+.logout-link:hover {
+    color: #ffffff;
+}
 
 .login-button:hover {
     background: #c49a53;
@@ -242,6 +259,23 @@ body {
 .alert-box button {
     cursor: pointer;
     width: 100%;
+}
+
+.navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-username {
+    color: #d5a34f;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logout-form {
+    margin: 0;
 }
 
 

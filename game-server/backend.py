@@ -25,19 +25,21 @@ templates = Jinja2Templates(directory="pages")
 
 @app.get("/")
 async def home(request: Request):
+    username = get_current_username(request)
     return templates.TemplateResponse(
         request=request,
         name="homepage.html",
-        context = {}
+        context = {"username":username}
     )
     
 @app.get("/login")
 async def login(request: Request):
-    return templates.TemplateResponse(request=request, name="login.html",context={})
+    return templates.TemplateResponse(request=request, name="login.html",context={"username": get_current_username(request)})
 
 @app.get("/register")
 async def register(request: Request):
-    return templates.TemplateResponse(request=request, name="register.html", context={})
+    
+    return templates.TemplateResponse(request=request, name="register.html", context={"username": get_current_username(request)})
 
 
 def hash_password(password):
@@ -53,3 +55,13 @@ def check_password(password: str, stored_hash: str):
     stored_hash_bytes = stored_hash.encode('utf-8')
     return bcrypt.checkpw(password_bytes, stored_hash_bytes)
 
+def get_current_username(request: Request):
+    token = request.cookies.get("auth_token")
+    if not token:
+        return None
+    
+    payload = verify_jwt(token)
+    
+    if payload is None:
+        return None
+    return payload.get("sub")

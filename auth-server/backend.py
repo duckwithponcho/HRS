@@ -13,6 +13,8 @@ from database import initialize_databse, get_user_by_username,create_user
 import bcrypt
 import html
 
+from fastapi.responses import RedirectResponse
+
 load_dotenv()
 
 with open("keys/private.pem","r") as key_file:
@@ -41,6 +43,10 @@ async def register_post(request: Request):
     password = form_data.get("password")
     
     #validate username and password here
+    
+    #check if username is already taken
+    if get_user_by_username(username) is not None:
+        raise HTTPException(status_code=400, detail = "user already exists")
     if not verify_username(username):
         raise HTTPException(status_code=400, detail="Invalid username")
     if not verify_password(password):
@@ -58,14 +64,15 @@ async def login(request: Request):
     form_data = await request.form()
     username = form_data.get("username")
     password = form_data.get("password")
-    
+
     user = get_user_by_username(username)
-    
+
     if user is None:
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
     stored_hash = user[2]
-    
+    token = generate_jwt(user[1])
+    print(user[1])
     if not check_password(password, stored_hash):
         raise HTTPException(status_code=401, detail="Invalid username or password")
     
@@ -92,9 +99,7 @@ def verify_username(username: str):
     #make sure username only contains alphanumeric 
     if not username.isalnum():
         return False
-    #check if username is already taken
-    if get_user_by_username(username) is not None:
-        return False
+    
     if len(username) < 3 or len(username) > 20:
         return False
     return True
@@ -116,4 +121,10 @@ def hash_password(password: str):
     hashed_password = bcrypt.hashpw(password_bytes, salt)
     
     return hashed_password.decode("utf-8")
+
+def check_password(password: str, stored_hash: str):
+    password_bytes = password.encode("utf-8")
+    stored_hash_bytes = stored_hash.encode("utf-8")
+    
+    return bcrypt.checkpw(password_bytes, stored_hash_bytes)
     
