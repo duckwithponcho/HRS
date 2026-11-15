@@ -9,7 +9,7 @@ from dotenv import load_dotenv #loads variables from .env file into python envir
 
 import jwt
 from datetime import datetime, timedelta, timezone
-from database import initialize_databse, get_user_by_username
+from database import initialize_databse, get_user_by_username,create_user
 import bcrypt
 import html
 
@@ -108,5 +108,12 @@ def verify_password(password: str):
         if not char.isalnum() and char not in SPECIAL_CHARACTERS:
             return False
     return True
+
+
+def hash_password(password: str):
+    password_bytes = password.encode("utf-8")
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password_bytes, salt)
     
+    return hashed_password.decode("utf-8")
     
