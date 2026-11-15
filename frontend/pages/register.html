@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +33,8 @@
                 Create an account to enter the dungeon.
             </p>
 
-            <form action="/register" method="POST">
+            <form id="register-form" class="auth-form"
+                  action="/register" method="POST">
 
                 <div class="form-group">
                     <label for="username">USERNAME</label>
@@ -85,6 +85,22 @@
         </section>
 
     </main>
+
+    <!-- Custom Alert Popup -->
+    <div id="alert-modal" class="alert-modal">
+        <div class="alert-box">
+            <h2 id="alert-title">REGISTRATION ERROR</h2>
+
+            <p id="alert-message">Please check your registration details.</p>
+
+            <button id="alert-close" class="enter-button">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Load JavaScript after HTML elements exist -->
+    <script src="/js/auth.js?v=2"></script>
 
 </body>
 </html>

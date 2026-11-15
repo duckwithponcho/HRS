@@ -26,15 +26,16 @@
 
         <section class="login-container">
 
-            <p class="subtitle">WELCOME BACK, WARRIOR</p>
+            <p class="subtitle">WELCOME BACK, ADVENTURER</p>
 
-            <h1>ENTER THE DUNGEON</h1>
+            <h1>ENTER THE ARENA</h1>
 
             <p class="login-description">
-                Log in to return to the arena.
+                Log in to continue your adventure.
             </p>
 
-            <form action="/login" method="POST">
+            <form id="login-form" class="auth-form"
+                  action="/login" method="POST">
 
                 <div class="form-group">
                     <label for="username">USERNAME</label>
@@ -65,8 +66,8 @@
             </form>
 
             <p class="register-link">
-                New to the dungeon?
-                <a href="/register">Create an account</a>
+                Don't have an account?
+                <a href="/register">Register here</a>
             </p>
 
             <a href="/" class="back-link">← BACK TO HOME</a>
@@ -74,6 +75,26 @@
         </section>
 
     </main>
+
+    <!-- Custom Alert Popup -->
+    <div id="alert-modal" class="alert-modal">
+        <div class="alert-box">
+
+            <h2 id="alert-title">INVALID LOGIN</h2>
+
+            <p id="alert-message">
+                Incorrect username or password.
+            </p>
+
+            <button id="alert-close" class="enter-button">
+                OK
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Load JavaScript after all HTML elements -->
+    <script src="/js/auth.js?v=2"></script>
 
 </body>
 </html>

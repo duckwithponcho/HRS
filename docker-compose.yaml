@@ -22,13 +22,40 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      POSTGRES_USER: ${LOCAL_USER}
-      POSTGRES_PASSWORD: ${LOCAL_PASSWORD}
-      POSTGRES_DB: ${LOCAL_DB}
-    ports:
-      - "8080:8080"
+      LOCAL_USER: ${LOCAL_USER}
+      LOCAL_PASSWORD: ${LOCAL_PASSWORD}
+      LOCAL_DB: ${LOCAL_DB}
+    expose:
+      - "8080"
     volumes:
       - ./frontend/pages:/app/pages:ro
       - ./frontend/css:/app/css:ro
       - ./frontend/js:/app/js:ro
       - ./frontend/images:/app/images:ro
+      - ./game-server/keys/public.pem:/app/keys/public.pem:ro
+
+  auth-server:
+    build: ./auth-server
+    environment:
+      LOCAL_USER: ${LOCAL_USER}
+      LOCAL_PASSWORD: ${LOCAL_PASSWORD}
+      LOCAL_DB: ${LOCAL_DB}
+    expose:
+      - "8001"
+    volumes:
+      - ./auth-server/keys/private.pem:/app/keys/private.pem:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - game-server
+      - auth-server
+volumes:
+  postgres-data:

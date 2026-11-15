@@ -3,13 +3,25 @@ from fastapi.responses import HTMLResponse #allows you to return html as an HTTP
 from fastapi.staticfiles import StaticFiles #allows FAST API to serve static files, CSS files, JS files, images ->backend serves directly than generating dynamically
 from fastapi.templating import Jinja2Templates #connects FAST api with Jinja2 templating engine, alows backend to load html files and dyubamically inser info into them 
 
+import os #python access environemtn variables and OS functinoality 
+import psycopg #connect and communicate with postgreSQL
+
+from contextlib import asynccontextmanager #define a function that manages startup and shutdown operation for FASTAPI
+from dotenv import load_dotenv #loads variables from .env file into python environemnt variables 
+from auth import verify_jwt #import the verify_jwt function from auth.py
+import bcrypt
+
+#NOTE: Keep hompage, game routes, and other application functiaonltiy in game-server/backend.py
+
+load_dotenv()
+
+ 
 app = FastAPI() #main object that manages the backend
 
 app.mount("/css", StaticFiles(directory="css"), name="css")
 app.mount("/js", StaticFiles(directory="js"), name="js")
 app.mount("/images", StaticFiles(directory="images"), name="images")
-templates = Jinja2Templates(directory="pages")
-
+templates = Jinja2Templates(directory="pages")    
 
 @app.get("/")
 async def home(request: Request):
@@ -18,15 +30,26 @@ async def home(request: Request):
         name="homepage.html",
         context = {}
     )
-
+    
 @app.get("/login")
 async def login(request: Request):
-    return templates.TemplateResponse(
-        request=request,
-        name="login.html",
-        context = {}
-    )
-    
+    return templates.TemplateResponse(request=request, name="login.html",context={})
+
 @app.get("/register")
 async def register(request: Request):
-    return templates.TemplateResponse(request=request, name="register.html", context = {})
+    return templates.TemplateResponse(request=request, name="register.html", context={})
+
+
+def hash_password(password):
+    passwrod_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt(print)
+    hashed_password = bcrypt.hashpw(password_bytes, salt)
+        
+    return hashed_password.decode('utf-8')
+
+#returns true if password matches and false otherwise
+def check_password(password: str, stored_hash: str):
+    password_bytes = password.encode('utf-8')
+    stored_hash_bytes = stored_hash.encode('utf-8')
+    return bcrypt.checkpw(password_bytes, stored_hash_bytes)
+
