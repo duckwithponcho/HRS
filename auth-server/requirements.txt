@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+jinja2
+psycopg[binary]
+python-dotenv
+bcrypt
+PyJWT[crypto]
+python-multipart

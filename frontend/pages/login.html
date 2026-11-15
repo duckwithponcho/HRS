@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Dungeon Arena</title>
+
+    <link rel="stylesheet" href="/css/dungeon-wall.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+    <a href="/" class="logo">DUNGEON ARENA</a>
+
+    <nav>
+       {% if username %}
+    <span class="nav-username">Welcome, {{ username }}!</span>
+
+    <form action="/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-link">LOGOUT</button>
+    </form>
+{% else %}
+    <a href="/login">LOGIN</a>
+{% endif %}
+    </nav>
+</header>
+
+    <!-- Login Section -->
+    <main class="login-page">
+
+        <section class="login-container">
+
+            <p class="subtitle">WELCOME BACK, ADVENTURER</p>
+
+            <h1>ENTER THE ARENA</h1>
+
+            <p class="login-description">
+                Log in to continue your adventure.
+            </p>
+
+            <form id="login-form" class="auth-form"
+                  action="/login" method="POST">
+
+                <div class="form-group">
+                    <label for="username">USERNAME</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">PASSWORD</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="enter-button">
+                    LOGIN
+                </button>
+
+            </form>
+
+            <p class="register-link">
+                Don't have an account?
+                <a href="/register">Register here</a>
+            </p>
+
+            <a href="/" class="back-link">← BACK TO HOME</a>
+
+        </section>
+
+    </main>
+
+    <!-- Custom Alert Popup -->
+    <div id="alert-modal" class="alert-modal">
+        <div class="alert-box">
+
+            <h2 id="alert-title">INVALID LOGIN</h2>
+
+            <p id="alert-message">
+                Incorrect username or password.
+            </p>
+
+            <button id="alert-close" class="enter-button">
+                OK
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Load JavaScript after all HTML elements -->
+    <script src="/js/auth.js?v=2"></script>
+
+</body>
+</html>

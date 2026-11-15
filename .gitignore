@@ -1,1 +1,3 @@
 .env
+auth-server/keys/private.pem
+game-server/keys/public.pem
