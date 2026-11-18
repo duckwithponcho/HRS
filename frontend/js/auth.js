@@ -130,3 +130,118 @@ authForms.forEach(form => {
         }
     });
 });
+
+// const passwordInput = document.getElementById("password");
+
+// if (passwordInput) {
+
+//     const requirements = {
+//         length: document.getElementById("length"),
+//         lowercase: document.getElementById("lowercase"),
+//         uppercase: document.getElementById("uppercase"),
+//         number: document.getElementById("number"),
+//         special: document.getElementById("special")
+//     };
+
+//     passwordInput.addEventListener("input", function () {
+
+//         const password = passwordInput.value;
+
+//         const checks = {
+//             length: password.length >= 8,
+//             lowercase: /[a-z]/.test(password),
+//             uppercase: /[A-Z]/.test(password),
+//             number: /[0-9]/.test(password),
+//             special: /[!@#$%^&()\-_=]/.test(password)
+//         };
+
+//         for (const requirement in checks) {
+
+//             if (requirements[requirement]) {
+//                 requirements[requirement].classList.toggle(
+//                     "valid",
+//                     checks[requirement]
+//                 );
+//             }
+
+//         }
+
+//     });
+
+// }
+
+
+const passwordInput = document.getElementById("password");
+
+if (passwordInput) {
+
+    const requirements = {
+        length: document.getElementById("length"),
+        lowercase: document.getElementById("lowercase"),
+        uppercase: document.getElementById("uppercase"),
+        number: document.getElementById("number"),
+        special: document.getElementById("special")
+    };
+
+    function validatePassword() {
+
+        const password = passwordInput.value;
+
+        const checks = {
+            length: password.length >= 8,
+            lowercase: /[a-z]/.test(password),
+            uppercase: /[A-Z]/.test(password),
+            number: /[0-9]/.test(password),
+            special: /[!@#$%^&()\-_=]/.test(password)
+        };
+
+        for (const key in checks) {
+
+            const requirement = requirements[key];
+
+            if (!requirement) continue;
+
+            requirement.classList.toggle("valid", checks[key]);
+
+        }
+    }
+
+    // Set initial colors
+    validatePassword();
+
+    // Update colors while typing
+    passwordInput.addEventListener("input", validatePassword);
+}
+
+// Username validation
+const usernameInput = document.getElementById("username");
+
+if (usernameInput) {
+
+    const usernameLength = document.getElementById("username-length");
+    const usernameCharacters = document.getElementById("username-characters");
+
+    usernameInput.addEventListener("input", function () {
+
+        const username = usernameInput.value;
+
+        // Check username length (3-20 characters)
+        if (username.length >= 3 && username.length <= 20) {
+            usernameLength.classList.remove("invalid");
+            usernameLength.classList.add("valid");
+        } else {
+            usernameLength.classList.remove("valid");
+            usernameLength.classList.add("invalid");
+        }
+
+        // Check if username contains only alphanumeric characters
+        if (/^[a-zA-Z0-9]+$/.test(username)) {
+            usernameCharacters.classList.remove("invalid");
+            usernameCharacters.classList.add("valid");
+        } else {
+            usernameCharacters.classList.remove("valid");
+            usernameCharacters.classList.add("invalid");
+        }
+
+    });
+}

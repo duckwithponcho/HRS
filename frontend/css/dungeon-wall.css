@@ -289,4 +289,18 @@ body {
     color: #ffffff;
 }
 
+.password-requirements {
+    margin-top: 10px;
+    text-align: left;
+}
 
+.requirement {
+    color: #ff3333;
+    font-size: 13px;
+    margin: 5px 0;
+    transition: color 0.2s ease;
+}
+
+.requirement.valid {
+    color: #00cc66;
+}
