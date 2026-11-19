@@ -15,6 +15,13 @@ import bcrypt
 
 load_dotenv()
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    initialize_database()
+    yield
+
+app = FastAPI(lifespan=lifespan)
  
 app = FastAPI() #main object that manages the backend
 
