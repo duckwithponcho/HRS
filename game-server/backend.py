@@ -15,8 +15,13 @@ import bcrypt
 
 load_dotenv()
 
- 
-app = FastAPI() #main object that manages the backend
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    initialize_database()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 app.mount("/css", StaticFiles(directory="css"), name="css")
 app.mount("/js", StaticFiles(directory="js"), name="js")

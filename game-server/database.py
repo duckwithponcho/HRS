@@ -14,3 +14,13 @@ DATABASE_URL = (f"postgresql://{os.getenv('LOCAL_USER')}:"
     f"{os.getenv('LOCAL_DB')}")
 
 
+def initialize_database():
+    with psycopg.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS games (
+                    id SERIAL PRIMARY KEY,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+        conn.commit()
