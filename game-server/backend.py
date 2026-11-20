@@ -14,7 +14,7 @@ import bcrypt
 #NOTE: Keep hompage, game routes, and other application functiaonltiy in game-server/backend.py
 
 load_dotenv()
-
+from database import initialize_database
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
