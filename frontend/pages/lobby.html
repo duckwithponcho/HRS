@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Rooms</title>
+    <link rel="stylesheet" href="/css/dungeon-wall.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">DUNGEON</div>
+
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </nav>
+    </header>
+
+
+    <!-- Rooms Page -->
+    <main class="rooms-page">
+
+        <!-- Create Room -->
+        <div class="rooms-header">
+            <h1>GAME LOBBY</h1>
+
+            <button class="create-room-button" onclick="createRoom()">
+                + CREATE ROOM
+            </button>
+        </div>
+
+
+        <!-- Active Rooms -->
+        <section class="active-rooms-section">
+
+            <div class="active-rooms-heading">
+                <h2>ACTIVE ROOMS</h2>
+                <p>Find an adventure and join other players.</p>
+            </div>
+
+
+            <!-- Scrollable Room Container -->
+            <div class="rooms-container">
+
+                <div class="rooms-grid" id="roomsGrid">
+
+                    <!-- Room 1 -->
+                    <div class="room-card">
+                        <div class="room-status waiting">
+                            Waiting for players...
+                        </div>
+
+                        <img src="/images/dungeon-wall.png" alt="Game Room">
+
+                        <h3>Room #1</h3>
+
+                        <p class="player-count">3/10 Players</p>
+                    </div>
+
+
+                    <!-- Room 2 -->
+                    <div class="room-card">
+                        <div class="room-status started">
+                            Game started
+                        </div>
+
+                        <img src="/images/dungeon-wall.png" alt="Game Room">
+
+                        <h3>Room #2</h3>
+
+                        <p class="player-count">10/10 Players</p>
+                    </div>
+
+
+                    <!-- Room 3 -->
+                    <div class="room-card">
+                        <div class="room-status waiting">
+                            Waiting for players...
+                        </div>
+
+                        <img src="/images/dungeon-wall.png" alt="Game Room">
+
+                        <h3>Room #3</h3>
+
+                        <p class="player-count">5/10 Players</p>
+                    </div>
+
+
+                    <!-- Room 4 -->
+                    <div class="room-card">
+                        <div class="room-status waiting">
+                            Waiting for players...
+                        </div>
+
+                        <img src="/images/dungeon-wall.png" alt="Game Room">
+
+                        <h3>Room #4</h3>
+
+                        <p class="player-count">2/10 Players</p>
+                    </div>
+
+
+                    <!-- Room 5 -->
+                    <div class="room-card">
+                        <div class="room-status started">
+                            Game started
+                        </div>
+
+                        <img src="/images/dungeon-wall.png" alt="Game Room">
+
+                        <h3>Room #5</h3>
+
+                        <p class="player-count">8/10 Players</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Create Room JavaScript -->
+    <script>
+        let roomCount = 5;
+
+        function createRoom() {
+            roomCount++;
+
+            const roomsGrid = document.getElementById("roomsGrid");
+
+            const room = document.createElement("div");
+            room.className = "room-card";
+
+            room.innerHTML = `
+                <div class="room-status waiting">
+                    Waiting for players...
+                </div>
+
+                <img src="/images/dungeon-wall.png" alt="Game Room">
+
+                <h3>Room #${roomCount}</h3>
+
+                <p class="player-count">1/10 Players</p>
+            `;
+
+            roomsGrid.appendChild(room);
+        }
+    </script>
+
+</body>
+</html>

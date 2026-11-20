@@ -34,13 +34,15 @@ async def home(request: Request):
     
 @app.get("/login")
 async def login(request: Request):
-    return templates.TemplateResponse(request=request, name="login.html",context={"username": get_current_username(request)})
+    return templates.TemplateResponse(request=request, name="login.html", context={"username": get_current_username(request)})
 
 @app.get("/register")
 async def register(request: Request):
-    
     return templates.TemplateResponse(request=request, name="register.html", context={"username": get_current_username(request)})
 
+@app.get("/lobby")
+async def lobby(request: Request):
+    return templates.TemplateResponse(request=request, name="lobby.html", context={"username": get_current_username(request)})
 
 def get_current_username(request: Request):
     token = request.cookies.get("auth_token")
@@ -52,3 +54,4 @@ def get_current_username(request: Request):
     if payload is None:
         return None
     return payload.get("sub")
+
