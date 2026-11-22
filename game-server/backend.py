@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager #define a function that manages start
 from dotenv import load_dotenv #loads variables from .env file into python environemnt variables 
 from auth import verify_jwt #import the verify_jwt function from auth.py
 import bcrypt
+import time
 
 #NOTE: Keep hompage, game routes, and other application functiaonltiy in game-server/backend.py
 
@@ -18,6 +19,7 @@ from database import initialize_database
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    wait_for_public_key()
     initialize_database()
     yield
 
@@ -57,3 +59,14 @@ def get_current_username(request: Request):
     if payload is None:
         return None
     return payload.get("sub")
+
+def wait_for_public_key():
+    public_key_path = "/app/keys/public.pem"
+
+    for _ in range(30):
+        if os.path.exists(public_key_path):
+            return
+
+        time.sleep(1)
+
+    raise RuntimeError("Auth server did not generate the public key.")

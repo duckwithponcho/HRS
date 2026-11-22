@@ -33,7 +33,8 @@ services:
       - ./frontend/css:/app/css:ro
       - ./frontend/js:/app/js:ro
       - ./frontend/images:/app/images:ro
-      - ./game-server/keys/public.pem:/app/keys/public.pem:ro
+      - ./game-server/keys:/app/keys:ro
+      
 
   auth-server:
     build: ./auth-server
@@ -44,7 +45,8 @@ services:
     expose:
       - "8001"
     volumes:
-      - ./auth-server/keys/private.pem:/app/keys/private.pem:ro
+      - ./auth-server/keys:/app/keys
+      - ./game-server/keys:/app/game-keys
     depends_on:
       postgres:
         condition: service_healthy

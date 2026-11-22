@@ -4,10 +4,11 @@ import jwt
 
 PUBLIC_KEY_PATH = "keys/public.pem"
 
-with open(PUBLIC_KEY_PATH, "r") as key_file:
-    PUBLIC_KEY = key_file.read()
+
     
 def verify_jwt(token: str):
+    with open(PUBLIC_KEY_PATH, "r") as key_file:
+        PUBLIC_KEY = key_file.read()
     try:
         payload = jwt.decode(token, PUBLIC_KEY, 
                              algorithms=["RS256"],

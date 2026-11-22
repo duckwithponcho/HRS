@@ -12,16 +12,17 @@ from datetime import datetime, timedelta, timezone
 from database import initialize_databse, get_user_by_username,create_user
 import bcrypt
 import html
+from key_generation import generate_keys_if_missing
 
 from fastapi.responses import RedirectResponse
 
 load_dotenv()
 
-with open("keys/private.pem","r") as key_file:
-    PRIVATE_KEY = key_file.read()
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    generate_keys_if_missing()
     initialize_databse()
     yield
     
@@ -83,13 +84,15 @@ async def login(request: Request):
     return response
 
 def generate_jwt(username: str):
+    with open("keys/private.pem","r") as key_file:
+        private_key = key_file.read()
     payload = {
         "sub":username,
         "iat": datetime.now(timezone.utc),
         "exp": datetime.now(timezone.utc) + timedelta(hours=1)
     }
     
-    token = jwt.encode(payload, PRIVATE_KEY,algorithm="RS256")
+    token = jwt.encode(payload, private_key,algorithm="RS256")
     
     return token
 
