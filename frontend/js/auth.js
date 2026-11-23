@@ -31,15 +31,17 @@ function showAlert(title, message, redirect = null) {
 }
 
 // Close popup
-alertClose.addEventListener("click", function() {
-    console.log("POPUP CLOSED");
-
-    alertModal.style.display = "none";
-
-    if (redirectAfterAlert !== null) {
-        window.location.href = redirectAfterAlert;
-    }
-});
+if (alertClose) {
+    alertClose.addEventListener("click", function() {
+        console.log("POPUP CLOSED");
+    
+        alertModal.style.display = "none";
+    
+        if (redirectAfterAlert !== null) {
+            window.location.href = redirectAfterAlert;
+        }
+    });
+}
 
 // Get authentication forms
 const authForms = document.querySelectorAll(".auth-form");
@@ -91,16 +93,39 @@ authForms.forEach(form => {
             }
 
             // Handle failed login or registration
+
+            // if (!response.ok) {
+
+            //     const title = form.id === "register-form"
+            //         ? "REGISTRATION ERROR"
+            //         : "LOGIN ERROR";
+
+            //     showAlert(
+            //         title,
+            //         data.detail || "Something went wrong. Please try again."
+            //     );
+
+            //     return;
+            // }
+
             if (!response.ok) {
+                let title = "ERROR";
+                let message = "Something went wrong. Please try again.";
 
-                const title = form.id === "register-form"
-                    ? "REGISTRATION ERROR"
-                    : "LOGIN ERROR";
+                if (form.id === "register-form") {
+                    title = "REGISTRATION ERROR";
+                    message = data.detail || message;
+                }
+                else if (form.id === "login-form") {
+                    title = "LOGIN ERROR";
+                    message = data.detail || message;
+                }
+                else if (form.id === "create-room-form") {
+                    title = "ROOM CREATION ERROR";
+                    message = data.error || message;
+                }
 
-                showAlert(
-                    title,
-                    data.detail || "Something went wrong. Please try again."
-                );
+                showAlert(title, message);
 
                 return;
             }
@@ -113,11 +138,24 @@ authForms.forEach(form => {
                     "/login"
                 );
             }
+            // Successful login
+            else if (form.id === "login-form") {
+                showAlert("LOGIN SUCCESSFUL",
+                "",
+                "/lobby")
+            }
+            // Successful room creation
+            else if (form.id === "create-room-form") {
+                showAlert("ROOM CREATED!",
+                "",
+                response.url)
+                // window.location.href = response.url;
+            }
 
             // Successful login
-            if (form.id === "login-form") {
-                window.location.href = "/";
-            }
+            // if (form.id === "login-form") {
+            //     window.location.href = "/";
+            // }
 
         } catch (error) {
 
@@ -130,46 +168,6 @@ authForms.forEach(form => {
         }
     });
 });
-
-// const passwordInput = document.getElementById("password");
-
-// if (passwordInput) {
-
-//     const requirements = {
-//         length: document.getElementById("length"),
-//         lowercase: document.getElementById("lowercase"),
-//         uppercase: document.getElementById("uppercase"),
-//         number: document.getElementById("number"),
-//         special: document.getElementById("special")
-//     };
-
-//     passwordInput.addEventListener("input", function () {
-
-//         const password = passwordInput.value;
-
-//         const checks = {
-//             length: password.length >= 8,
-//             lowercase: /[a-z]/.test(password),
-//             uppercase: /[A-Z]/.test(password),
-//             number: /[0-9]/.test(password),
-//             special: /[!@#$%^&()\-_=]/.test(password)
-//         };
-
-//         for (const requirement in checks) {
-
-//             if (requirements[requirement]) {
-//                 requirements[requirement].classList.toggle(
-//                     "valid",
-//                     checks[requirement]
-//                 );
-//             }
-
-//         }
-
-//     });
-
-// }
-
 
 const passwordInput = document.getElementById("password");
 
@@ -243,5 +241,21 @@ if (usernameInput) {
             usernameCharacters.classList.add("invalid");
         }
 
+    });
+}
+
+const roomNameInput = document.getElementById("roomName")
+const roomNameLength = document.getElementById("roomNameLength")
+
+
+if (roomNameInput) {
+    roomNameInput.addEventListener("input", function() {
+        const roomName = roomNameInput.value;
+        if (roomName.length >= 1 && roomName.length <= 20) {
+            roomNameLength.classList.add("valid");
+        }
+        else {
+            roomNameLength.classList.remove("valid");
+        }
     });
 }

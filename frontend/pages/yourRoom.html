@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Room</title>
+    <link rel="stylesheet" href="/css/dungeon-wall.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">DUNGEON ARENA</div>
+
+        <nav>
+            <form action="/logout" method="POST" class="logout-form">
+                <button type="submit" class="logout-link">LOGOUT</button>
+            </form>
+        </nav>
+    </header>
+
+    <!-- Game Room Page -->
+    <main class="rooms-page">
+
+        <!-- Page Header -->
+        <div class="create-room-header">
+            <h1>GAME ROOM</h1>
+        </div>
+
+        <!-- Game Room Section -->
+        <section class="active-rooms-section">
+
+            <div class="game-room-container">
+
+                <label class="room-name-label">Room Name: {{ roomName }}</label>
+
+                <div class="players-container">
+                    <h2>Players in Room</h2>
+            
+                    <ul class="player-list">
+                        {% for player in players %}
+                            <li>{{ player.username }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Custom Alert Popup -->
+    <div id="alert-modal" class="alert-modal">
+        <div class="alert-box">
+            <h2 id="alert-title">REGISTRATION ERROR</h2>
+
+            <p id="alert-message">Please check your registration details.</p>
+
+            <button id="alert-close" class="enter-button">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Load JavaScript after HTML elements exist -->
+    <script src="/js/auth.js"></script>
+    <!-- <script src="/js/buttonControl.js"></script> -->
+
+</body>
+</html>
+

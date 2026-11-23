@@ -10,12 +10,15 @@
 
     <!-- Navbar -->
     <header class="navbar">
-        <div class="logo">DUNGEON</div>
+        <div class="logo">DUNGEON ARENA</div>
 
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Profile</a>
-            <a href="#">Logout</a>
+            <!-- <a href="#">Home</a> -->
+            <!-- <a href="#">Profile</a> -->
+            <form action="/logout" method="POST" class="logout-form">
+                <button type="submit" class="logout-link">LOGOUT</button>
+            </form>
+            <!-- <a href="#">Logout</a> -->
         </nav>
     </header>
 
@@ -27,7 +30,7 @@
         <div class="rooms-header">
             <h1>GAME LOBBY</h1>
 
-            <button class="create-room-button" onclick="createRoom()">
+            <button class="create-room-button" onclick="window.location.href='/create-room'">
                 + CREATE ROOM
             </button>
         </div>
@@ -45,10 +48,10 @@
             <!-- Scrollable Room Container -->
             <div class="rooms-container">
 
-                <div class="rooms-grid" id="roomsGrid">
+                <!-- <div class="rooms-grid" id="roomsGrid"> -->
 
                     <!-- Room 1 -->
-                    <div class="room-card">
+                    <!-- <div class="room-card">
                         <div class="room-status waiting">
                             Waiting for players...
                         </div>
@@ -58,11 +61,11 @@
                         <h3>Room #1</h3>
 
                         <p class="player-count">3/10 Players</p>
-                    </div>
+                    </div> -->
 
 
                     <!-- Room 2 -->
-                    <div class="room-card">
+                    <!-- <div class="room-card">
                         <div class="room-status started">
                             Game started
                         </div>
@@ -72,11 +75,11 @@
                         <h3>Room #2</h3>
 
                         <p class="player-count">10/10 Players</p>
-                    </div>
+                    </div> -->
 
 
                     <!-- Room 3 -->
-                    <div class="room-card">
+                    <!-- <div class="room-card">
                         <div class="room-status waiting">
                             Waiting for players...
                         </div>
@@ -86,11 +89,11 @@
                         <h3>Room #3</h3>
 
                         <p class="player-count">5/10 Players</p>
-                    </div>
+                    </div> -->
 
 
                     <!-- Room 4 -->
-                    <div class="room-card">
+                    <!-- <div class="room-card">
                         <div class="room-status waiting">
                             Waiting for players...
                         </div>
@@ -100,11 +103,11 @@
                         <h3>Room #4</h3>
 
                         <p class="player-count">2/10 Players</p>
-                    </div>
+                    </div> -->
 
 
                     <!-- Room 5 -->
-                    <div class="room-card">
+                    <!-- <div class="room-card">
                         <div class="room-status started">
                             Game started
                         </div>
@@ -116,6 +119,40 @@
                         <p class="player-count">8/10 Players</p>
                     </div>
 
+                </div> -->
+
+                <div class="rooms-grid" id="roomsGrid">
+
+                    {% for room in rooms %}
+                
+                        <div class="room-card">
+                
+                            {% if room[2] %}
+                                <div class="room-status started">
+                                    Game started
+                                </div>
+                            {% else %}
+                                <div class="room-status waiting">
+                                    Waiting for players...
+                                </div>
+                            {% endif %}
+                
+                            <img src="/images/dungeon-wall.png" alt="Game Room">
+                
+                            <h3>{{ room[0] }}</h3>
+                
+                            <p class="player-count">
+                                {{ room[1]|length }}/10 Players
+                            </p>
+                
+                        </div>
+                
+                    {% else %}
+                
+                        <p>No active rooms available. Create one to get started!</p>
+                
+                    {% endfor %}
+                
                 </div>
 
             </div>
@@ -152,6 +189,7 @@
             roomsGrid.appendChild(room);
         }
     </script>
+    <script src="/js/buttonControl.js"></script>
 
 </body>
 </html>

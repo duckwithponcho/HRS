@@ -320,6 +320,15 @@ body {
 
 /* Rooms Header */
 
+.create-room-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 50px;
+    gap: 20px;
+}
+
 .rooms-header {
     display: flex;
     justify-content: space-between;
@@ -328,7 +337,7 @@ body {
     gap: 20px;
 }
 
-.rooms-header h1 {
+.rooms-header h1, .create-room-header h1 {
     color: #eee2c9;
     font-size: 38px;
     letter-spacing: 5px;
@@ -411,11 +420,11 @@ body {
     background: #c49a53;
 }
 
-/* Five Column Grid */
+/* Four Column Grid */
 
 .rooms-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
 }
 
@@ -477,6 +486,11 @@ body {
     font-size: 16px;
     letter-spacing: 2px;
     margin: 15px 0 8px;
+
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    min-height: 40px;
 }
 
 /* Player Count */
@@ -530,4 +544,95 @@ body {
 }
 
 /* above is css for lobby page */
+
+/* below is css for create room page */
+
+
+/* ============================= */
+/* CREATE ROOM PAGE              */
+/* ============================= */
+
+.create-room-form {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 45px 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    background: rgba(15, 15, 15, 0.94);
+    border: 1px solid #75603c;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+}
+
+.game-room-container {
+    width: 100%;
+    max-width: 800px;
+    min-height: 500px;
+    margin: 50px auto;
+    padding: 60px 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    background: rgba(15, 15, 15, 0.94);
+    border: 1px solid #75603c;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+}
+
+.game-room-container .room-name-label {
+    color: #d2ae70;
+    font-size: 25px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.create-room-form label {
+    color: #d2ae70;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.create-room-form input {
+    width: 100%;
+    padding: 15px;
+
+    background: #252525;
+    border: 1px solid #75603c;
+    color: #eee2c9;
+
+    font-size: 15px;
+    outline: none;
+}
+
+.create-room-form input:focus {
+    border-color: #c49a53;
+}
+
+.create-room-form input::placeholder {
+    color: #77716a;
+}
+
+/* Create Room Submit Button */
+
+.create-room-form .create-room-button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+@media (max-width: 500px) {
+    .create-room-form {
+        padding: 30px 22px;
+    }
+}
+
+/* above is css for create room page */
+
+.create-room-form .room-name-label {
+    font-size: 25px;
+}
 
