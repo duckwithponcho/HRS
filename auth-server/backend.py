@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, HTTPException #FAST api used to create web application and define routes, Request represnets an incoming HTTP reuqest froma. client
+from fastapi import FastAPI, Request, HTTPException, Depends, Response #FAST api used to create web application and define routes, Request represnets an incoming HTTP reuqest froma. client
 
 
 import os #python access environemtn variables and OS functinoality 
@@ -13,6 +13,7 @@ from database import initialize_databse, get_user_by_username,create_user
 import bcrypt
 import html
 from key_generation import generate_keys_if_missing
+from xsrf import generate_xsrf_token, set_xsrf_cookie,verify_xsrf_token
 
 from fastapi.responses import RedirectResponse
 
@@ -30,7 +31,7 @@ app = FastAPI(lifespan=lifespan) #main object that manages the backend
 
 #clear authentication cookie
 @app.post("/logout")
-async def logout(request:Request):
+async def logout(request:Request,_: None = Depends(verify_xsrf_token)):
    response = RedirectResponse(url="/login", status_code=302)
    response.delete_cookie(key="auth_token", path="/")
    return response
@@ -38,7 +39,7 @@ async def logout(request:Request):
 
 #Create new account
 @app.post("/register")
-async def register_post(request: Request):
+async def register_post(request: Request,_: None = Depends(verify_xsrf_token)):
     form_data = await request.form()
     username = form_data.get("username")
     password = form_data.get("password")
@@ -63,7 +64,7 @@ async def register_post(request: Request):
     return {"message": f"User created successfully: {username}"}
 
 @app.post("/login")
-async def login(request: Request):
+async def login(request: Request,_: None = Depends(verify_xsrf_token)):
     form_data = await request.form()
     username = form_data.get("username")
     password = form_data.get("password")
@@ -82,6 +83,14 @@ async def login(request: Request):
     
     response.set_cookie(key="auth_token",value = token, httponly=True,secure=False,samesite="lax",max_age=3600,path="/")
     return response
+@app.get("/csrf")
+async def get_csrf_token(request: Request, response: Response):
+    #Resuse the existing token if one already exists
+    token = request.cookies.get("xsrf_token")
+    if not token:
+        token = generate_xsrf_token()
+    set_xsrf_cookie(response, token)
+    return {"message": "XSRF token ready"}
 
 def generate_jwt(username: str):
     with open("keys/private.pem","r") as key_file:

@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles #allows FAST API to serve static fil
 from fastapi.templating import Jinja2Templates #connects FAST api with Jinja2 templating engine, alows backend to load html files and dyubamically inser info into them 
 from fastapi.responses import JSONResponse
 from fastapi.responses import RedirectResponse
+from fastapi import Depends
+from xsrf import verify_xsrf_token
 
 import os #python access environment variables and OS functionality 
 import psycopg #connect and communicate with postgreSQL
@@ -45,6 +47,7 @@ async def home(request: Request):
     
 @app.get("/login")
 async def login(request: Request):
+    
     return templates.TemplateResponse(request=request, name="login.html", context={"username": get_current_username(request)})
 
 @app.get("/register")
@@ -74,16 +77,18 @@ async def lobby(request: Request):
 #     return templates.TemplateResponse(request=request, name="lobby.html", context={"username": get_current_username(request)})
 
 @app.get("/create-room")
+
 async def createRoom(request: Request):
     return templates.TemplateResponse(request=request, name="createRoom.html", context={"username": get_current_username(request)})
 
 @app.get("/your-room")
+
 async def renderYourRoom(request: Request, roomName: str):
     return templates.TemplateResponse(request=request, name="yourRoom.html", context={"username": get_current_username(request), 
     "roomName": roomName})
-
+    
 @app.post("/your-room")
-async def yourRoom(request: Request):
+async def yourRoom(request: Request, _: None = Depends(verify_xsrf_token)):
     formData = await request.form()
     roomName = formData.get("roomName")
     with database.get_connection() as conn:
@@ -100,6 +105,7 @@ async def yourRoom(request: Request):
     return RedirectResponse(url="/your-room?roomName=" + roomName, status_code=303)
 
 def get_current_username(request: Request):
+
     token = request.cookies.get("auth_token")
     if not token:
         return None
